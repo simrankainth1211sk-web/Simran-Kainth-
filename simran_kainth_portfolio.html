@@ -1,3 +1,7 @@
+
+PHOTO_B64=$(cat /tmp/photo_b64.txt)
+
+cat > /mnt/user-data/outputs/simran_kainth_portfolio.html << HTMLEOF
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,56 +12,39 @@
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --cream: #F7F4EE;
-    --ink: #1A1814;
-    --ink-muted: #5C5851;
-    --ink-light: #9A948A;
-    --teal: #0F6E56;
-    --teal-light: #E1F5EE;
-    --teal-mid: #1D9E75;
-    --amber: #BA7517;
-    --amber-light: #FAEEDA;
-    --coral: #993C1D;
-    --coral-light: #FAECE7;
-    --blue: #185FA5;
-    --blue-light: #E6F1FB;
-    --border: rgba(26,24,20,0.12);
+    --cream: #F7F4EE; --ink: #1A1814; --ink-muted: #5C5851; --ink-light: #9A948A;
+    --teal: #0F6E56; --teal-light: #E1F5EE; --teal-mid: #1D9E75;
+    --amber: #BA7517; --amber-light: #FAEEDA;
+    --coral: #993C1D; --blue: #185FA5; --border: rgba(26,24,20,0.12);
   }
   html { scroll-behavior: smooth; }
   body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--ink); font-size: 16px; line-height: 1.6; }
-
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    background: rgba(247,244,238,0.92); backdrop-filter: blur(8px);
-    border-bottom: 0.5px solid var(--border);
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 3rem; height: 60px;
-  }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(247,244,238,0.92); backdrop-filter: blur(8px); border-bottom: 0.5px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 3rem; height: 60px; }
   .nav-name { font-family: 'DM Serif Display', serif; font-size: 18px; letter-spacing: -0.3px; }
   .nav-links { display: flex; gap: 2rem; list-style: none; }
   .nav-links a { text-decoration: none; color: var(--ink-muted); font-size: 14px; transition: color 0.2s; }
   .nav-links a:hover { color: var(--teal); }
-
   .hero { min-height: 100vh; display: flex; align-items: center; padding: 80px 3rem 4rem; position: relative; overflow: hidden; }
   .hero-bg { position: absolute; top: 0; right: 0; bottom: 0; width: 45%; background: var(--teal-light); clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%); z-index: 0; }
-  .hero-content { position: relative; z-index: 1; max-width: 600px; }
+  .hero-inner { position: relative; z-index: 1; display: flex; align-items: center; gap: 4rem; width: 100%; max-width: 1100px; }
+  .hero-content { max-width: 520px; }
+  .hero-photo-wrap { flex-shrink: 0; }
+  .hero-photo { width: 260px; height: 310px; object-fit: cover; object-position: center top; border-radius: 4px; box-shadow: 0 12px 40px rgba(0,0,0,0.15); border: 4px solid white; }
   .hero-eyebrow { display: inline-block; background: var(--teal-light); color: var(--teal); font-size: 12px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; padding: 6px 14px; border-radius: 2px; margin-bottom: 1.5rem; }
-  h1 { font-family: 'DM Serif Display', serif; font-size: clamp(3rem, 6vw, 5rem); line-height: 1.05; letter-spacing: -1px; margin-bottom: 1.25rem; }
+  h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2.5rem, 5vw, 4.5rem); line-height: 1.05; letter-spacing: -1px; margin-bottom: 1.25rem; }
   h1 em { font-style: italic; color: var(--teal-mid); }
-  .hero-sub { font-size: 18px; color: var(--ink-muted); max-width: 480px; margin-bottom: 2.5rem; font-weight: 300; line-height: 1.7; }
+  .hero-sub { font-size: 17px; color: var(--ink-muted); margin-bottom: 2.5rem; font-weight: 300; line-height: 1.7; }
   .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
-  .btn-primary { background: var(--ink); color: var(--cream); padding: 12px 28px; border-radius: 2px; font-size: 14px; font-weight: 500; text-decoration: none; letter-spacing: 0.3px; transition: background 0.2s; border: none; cursor: pointer; }
+  .btn-primary { background: var(--ink); color: var(--cream); padding: 12px 28px; border-radius: 2px; font-size: 14px; font-weight: 500; text-decoration: none; letter-spacing: 0.3px; transition: background 0.2s; }
   .btn-primary:hover { background: var(--teal); }
-  .btn-outline { background: transparent; color: var(--ink); padding: 12px 28px; border-radius: 2px; border: 1px solid var(--border); font-size: 14px; font-weight: 500; text-decoration: none; letter-spacing: 0.3px; transition: border-color 0.2s; }
+  .btn-outline { background: transparent; color: var(--ink); padding: 12px 28px; border-radius: 2px; border: 1px solid var(--border); font-size: 14px; font-weight: 500; text-decoration: none; transition: border-color 0.2s; }
   .btn-outline:hover { border-color: var(--teal); color: var(--teal); }
-  .hero-stats { display: flex; gap: 3rem; margin-top: 4rem; padding-top: 2rem; border-top: 0.5px solid var(--border); }
-  .stat-num { font-family: 'DM Serif Display', serif; font-size: 2.5rem; line-height: 1; }
-  .stat-label { font-size: 12px; color: var(--ink-light); text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
-
+  .hero-stats { display: flex; gap: 3rem; margin-top: 3rem; padding-top: 2rem; border-top: 0.5px solid var(--border); }
+  .stat-num { font-family: 'DM Serif Display', serif; font-size: 2.2rem; line-height: 1; }
+  .stat-label { font-size: 11px; color: var(--ink-light); text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
   section { padding: 5rem 3rem; }
   .section-label { font-size: 11px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: var(--teal); margin-bottom: 1rem; }
   h2 { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 4vw, 3rem); letter-spacing: -0.5px; line-height: 1.1; margin-bottom: 2.5rem; }
-
   .skills-section { background: var(--ink); color: var(--cream); }
   .skills-section .section-label { color: var(--teal-mid); }
   .skills-section h2 { color: var(--cream); }
@@ -66,7 +53,6 @@
   .skill-card-title { font-size: 12px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; color: var(--teal-mid); margin-bottom: 1rem; }
   .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
   .skill-tag { font-size: 13px; color: rgba(247,244,238,0.7); background: rgba(255,255,255,0.07); padding: 4px 10px; border-radius: 2px; }
-
   .experience-list { display: flex; flex-direction: column; }
   .exp-item { display: grid; grid-template-columns: 160px 1fr; gap: 2rem; padding: 2rem 0; border-bottom: 0.5px solid var(--border); }
   .exp-item:first-child { border-top: 0.5px solid var(--border); }
@@ -76,51 +62,40 @@
   .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 8px; }
   .exp-bullets li { font-size: 14px; color: var(--ink-muted); padding-left: 1rem; position: relative; }
   .exp-bullets li::before { content: '—'; position: absolute; left: 0; color: var(--teal-mid); }
-
   .projects-section { background: #F0EDE5; }
   .projects-grid { display: flex; flex-direction: column; gap: 2rem; }
-
   .project-card { background: var(--cream); border: 0.5px solid var(--border); border-radius: 6px; overflow: hidden; display: grid; grid-template-columns: 4px 1fr; transition: box-shadow 0.2s; }
   .project-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.08); }
   .project-stripe { width: 4px; }
   .project-body { padding: 2rem 2rem 2rem 1.75rem; }
-
   .project-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
   .project-meta { display: flex; flex-direction: column; gap: 4px; }
   .project-institution { font-size: 11px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; color: var(--ink-light); }
   .project-title { font-family: 'DM Serif Display', serif; font-size: 1.4rem; line-height: 1.2; color: var(--ink); }
   .project-collab { font-size: 12px; color: var(--ink-light); font-style: italic; }
-
   .project-badges { display: flex; gap: 8px; flex-wrap: wrap; align-items: flex-start; }
   .badge { font-size: 11px; font-weight: 500; letter-spacing: 0.5px; padding: 4px 10px; border-radius: 2px; white-space: nowrap; }
-
   .project-desc { font-size: 14px; color: var(--ink-muted); line-height: 1.7; margin-bottom: 1.25rem; }
-
   .project-findings { border-left: 2px solid; padding: 1rem 1.25rem; margin-bottom: 1.25rem; border-radius: 0 4px 4px 0; }
   .project-findings-label { font-size: 11px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 0.5rem; }
   .project-findings ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
   .project-findings ul li { font-size: 13px; color: var(--ink-muted); padding-left: 1rem; position: relative; }
   .project-findings ul li::before { content: '→'; position: absolute; left: 0; font-size: 12px; }
-
   .project-methods { display: flex; flex-wrap: wrap; gap: 6px; }
-  .method-tag { font-size: 11px; font-weight: 500; letter-spacing: 0.3px; background: rgba(26,24,20,0.06); color: var(--ink-muted); padding: 4px 10px; border-radius: 2px; }
-
+  .method-tag { font-size: 11px; font-weight: 500; background: rgba(26,24,20,0.06); color: var(--ink-muted); padding: 4px 10px; border-radius: 2px; }
   .divider-label { font-size: 11px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: var(--ink-light); margin: 2.5rem 0 1.5rem; display: flex; align-items: center; gap: 1rem; }
   .divider-label::after { content: ''; flex: 1; height: 0.5px; background: var(--border); }
-
   .small-projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
   .small-card { background: var(--cream); border: 0.5px solid var(--border); border-radius: 4px; padding: 1.5rem; }
   .small-card-accent { width: 32px; height: 3px; border-radius: 2px; margin-bottom: 1rem; }
   .small-card-title { font-family: 'DM Serif Display', serif; font-size: 1rem; margin-bottom: 0.5rem; }
   .small-card-desc { font-size: 13px; color: var(--ink-muted); line-height: 1.6; margin-bottom: 1rem; }
-
   .edu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
   .edu-card { border: 0.5px solid var(--border); border-radius: 4px; padding: 1.5rem; }
   .edu-degree { font-family: 'DM Serif Display', serif; font-size: 1rem; margin-bottom: 6px; }
   .edu-school { font-size: 13px; color: var(--ink-muted); margin-bottom: 4px; }
   .edu-year { font-size: 12px; color: var(--ink-light); margin-bottom: 0.75rem; }
   .edu-gpa { font-size: 12px; font-weight: 500; color: var(--teal); background: var(--teal-light); display: inline-block; padding: 2px 8px; border-radius: 2px; }
-
   .contact-section { background: var(--ink); color: var(--cream); text-align: center; }
   .contact-section .section-label { color: var(--teal-mid); }
   .contact-section h2 { color: var(--cream); }
@@ -128,9 +103,11 @@
   .contact-links { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; }
   .contact-link { color: var(--cream); text-decoration: none; font-size: 14px; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 2px; transition: border-color 0.2s; }
   .contact-link:hover { border-color: var(--teal-mid); color: var(--teal-mid); }
-
   footer { background: var(--ink); color: rgba(247,244,238,0.3); text-align: center; padding: 1.5rem; font-size: 12px; border-top: 0.5px solid rgba(255,255,255,0.08); }
-
+  @media (max-width: 900px) {
+    .hero-photo-wrap { display: none; }
+    .hero-content { max-width: 100%; }
+  }
   @media (max-width: 768px) {
     nav { padding: 0 1.5rem; }
     .nav-links { display: none; }
@@ -159,18 +136,23 @@
 
 <section class="hero" id="about">
   <div class="hero-bg"></div>
-  <div class="hero-content">
-    <span class="hero-eyebrow">Data Analyst · Chicago, IL</span>
-    <h1>Turning data into<br><em>clear answers.</em></h1>
-    <p class="hero-sub">Quantitative economist with an MSc from DePaul and an ongoing MS in Business Data Analytics. I build reproducible pipelines, run rigorous models, and make results readable for any audience.</p>
-    <div class="hero-cta">
-      <a href="#projects" class="btn-primary">View projects</a>
-      <a href="#contact" class="btn-outline">Get in touch</a>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <span class="hero-eyebrow">Data Analyst · Chicago, IL</span>
+      <h1>Turning data into<br><em>clear answers.</em></h1>
+      <p class="hero-sub">Quantitative economist with an MSc from DePaul and an ongoing MS in Business Data Analytics. I build reproducible pipelines, run rigorous models, and make results readable for any audience.</p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn-primary">View projects</a>
+        <a href="#contact" class="btn-outline">Get in touch</a>
+      </div>
+      <div class="hero-stats">
+        <div><div class="stat-num">3.83</div><div class="stat-label">MSc GPA</div></div>
+        <div><div class="stat-num">5+</div><div class="stat-label">Data projects</div></div>
+        <div><div class="stat-num">R · Py</div><div class="stat-label">Core stack</div></div>
+      </div>
     </div>
-    <div class="hero-stats">
-      <div><div class="stat-num">3.83</div><div class="stat-label">MSc GPA</div></div>
-      <div><div class="stat-num">5+</div><div class="stat-label">Data projects</div></div>
-      <div><div class="stat-num">R · Py · Stata</div><div class="stat-label">Core stack</div></div>
+    <div class="hero-photo-wrap">
+      <img class="hero-photo" src="data:image/jpeg;base64,${PHOTO_B64}" alt="Simran Kainth"/>
     </div>
   </div>
 </section>
@@ -262,7 +244,6 @@
   <p class="section-label">Selected work</p>
   <h2>Data projects</h2>
   <div class="projects-grid">
-
     <div class="project-card">
       <div class="project-stripe" style="background: var(--teal);"></div>
       <div class="project-body">
@@ -282,7 +263,7 @@
           <ul>
             <li>Poverty rate was the strongest predictor — accounting for 41% of smoking rate variability (ANOVA F = 14.94, p &lt; 0.0001)</li>
             <li>K-means clustering (8 clusters) revealed high-poverty, low-education areas had up to 2× the smoking rates of affluent neighborhoods</li>
-            <li>Optimized Random Forest model achieved the best predictive accuracy (R² = 26.3%, MSE = 20.95), outperforming all regression baselines</li>
+            <li>Optimized Random Forest model achieved best predictive accuracy (R² = 26.3%, MSE = 20.95), outperforming all regression baselines</li>
             <li>Neural Network Model 2 (AUC = 0.752, specificity = 88.9%) effectively identified high-risk community areas</li>
           </ul>
         </div>
@@ -294,7 +275,6 @@
         </div>
       </div>
     </div>
-
     <div class="project-card">
       <div class="project-stripe" style="background: var(--amber);"></div>
       <div class="project-body">
@@ -327,34 +307,26 @@
         </div>
       </div>
     </div>
-
   </div>
-
   <div class="divider-label">Other projects</div>
   <div class="small-projects-grid">
     <div class="small-card">
       <div class="small-card-accent" style="background: var(--teal);"></div>
       <div class="small-card-title">Health Patterns in Chicago</div>
       <div class="small-card-desc">Examined how language barriers and healthcare access affect health behaviors across Chicago populations using regression and social network analysis in R.</div>
-      <div class="project-methods" style="margin-top:0;">
-        <span class="method-tag">Regression</span><span class="method-tag">Network analysis</span><span class="method-tag">R</span>
-      </div>
+      <div class="project-methods" style="margin-top:0;"><span class="method-tag">Regression</span><span class="method-tag">Network analysis</span><span class="method-tag">R</span></div>
     </div>
     <div class="small-card">
       <div class="small-card-accent" style="background: var(--blue);"></div>
       <div class="small-card-title">Urban Migration &amp; Cost of Living</div>
       <div class="small-card-desc">Measured how cost-of-living shifts drive city migration patterns using Granger causality tests and OLS on time-series data.</div>
-      <div class="project-methods" style="margin-top:0;">
-        <span class="method-tag">Time series</span><span class="method-tag">Granger causality</span><span class="method-tag">OLS</span>
-      </div>
+      <div class="project-methods" style="margin-top:0;"><span class="method-tag">Time series</span><span class="method-tag">Granger causality</span><span class="method-tag">OLS</span></div>
     </div>
     <div class="small-card">
       <div class="small-card-accent" style="background: var(--coral);"></div>
       <div class="small-card-title">Tax Policy Replication Study</div>
       <div class="small-card-desc">Reproduced Jack Salmon's published econometric paper (SSRN 4438499) from raw data in R, confirmed all main results, and wrote a formal methodology report.</div>
-      <div class="project-methods" style="margin-top:0;">
-        <span class="method-tag">Replication</span><span class="method-tag">Panel data</span><span class="method-tag">R</span>
-      </div>
+      <div class="project-methods" style="margin-top:0;"><span class="method-tag">Replication</span><span class="method-tag">Panel data</span><span class="method-tag">R</span></div>
     </div>
   </div>
 </section>
@@ -402,6 +374,7 @@
 </section>
 
 <footer>© 2026 Simran Kainth · Chicago, IL</footer>
-
 </body>
 </html>
+HTMLEOF
+echo "Done — $(wc -c < /mnt/user-data/outputs/simran_kainth_portfolio.html) bytes"
